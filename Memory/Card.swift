@@ -19,7 +19,7 @@ struct Card: Hashable {
     var isFaceUp = false
     var isMatched = false
     var seen = 0
-    var identifier: Int
+    private var identifier: Int
     
     static var identifierFactory = 0
     
