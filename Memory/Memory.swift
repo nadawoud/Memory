@@ -72,10 +72,10 @@ class Memory {
         flipCount = 0
         score = 0
         cards = shuffleCards()
+        indexOfOnlyFaceUpCard = nil
         for index in cards.indices {
             cards[index].isFaceUp = false
             cards[index].isMatched = false
-            indexOfOnlyFaceUpCard = nil
         }
     }
 }

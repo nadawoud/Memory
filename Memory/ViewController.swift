@@ -52,10 +52,10 @@ class ViewController: UIViewController {
     
     var emojiChoices = ["🤠", "🤣", "😇", "😍", "😱", "🤪", "🤩", "🤓", "🧐", "😴"]
     
-    var emoji = [Int: String]()
+    var emoji = [Card: String]()
     
     func randomizeTheme() {
-        emoji = [Int: String]()
+        emoji = [Card: String]()
         
         let themes = Array(themeEmoji.keys)
         let randomIndex = Int(arc4random_uniform(UInt32(themes.count)))
@@ -65,11 +65,11 @@ class ViewController: UIViewController {
     }
     
     func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
+        if emoji[card] == nil, emojiChoices.count > 0 {
             let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-            emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
+            emoji[card] = emojiChoices.remove(at: randomIndex)
         }
-        return emoji[card.identifier] ?? "♦️"
+        return emoji[card] ?? "♦️"
     }
    
     @IBAction func startNewGame(_ sender: UIButton) {
