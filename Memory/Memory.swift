@@ -15,7 +15,26 @@ class Memory {
     
     private(set) var flipCount = 0
     
-    private var indexOfOnlyFaceUpCard: Int?
+    private var indexOfOnlyFaceUpCard: Int? {
+        get {
+            var faceUpIndex: Int?
+            for index in cards.indices {
+                if cards[index].isFaceUp {
+                    if faceUpIndex == nil {
+                        faceUpIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return faceUpIndex
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     
     init (numberOfPairsOfCards: Int) {
         for _ in 1...numberOfPairsOfCards {
@@ -35,25 +54,19 @@ class Memory {
                     cards[index].isMatched = true
                     score += 2
                 } else {
-                    if cards[index].seen > 1 {
-                        score -= 1
-                    }
-                    if cards[indexOfOnlyFaceUpCard!].seen > 1 {
+                    if cards[index].seen > 1 || cards[indexOfOnlyFaceUpCard!].seen > 1 {
                         score -= 1
                     }
                 }
                 cards[index].seen += 1
-                cards[indexOfOnlyFaceUpCard!].seen += 1
                 cards[index].isFaceUp = true
-                indexOfOnlyFaceUpCard = nil
             }
             else {
                 for flipDownIndex in cards.indices {
                     cards[flipDownIndex].isFaceUp = false
                 }
-                cards[index].isFaceUp = true
                 indexOfOnlyFaceUpCard = index
-                cards[indexOfOnlyFaceUpCard!].seen += 1
+                cards[index].seen += 1
             }
         }
     }
